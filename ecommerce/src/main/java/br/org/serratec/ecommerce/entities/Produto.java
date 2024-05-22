@@ -2,12 +2,16 @@ package br.org.serratec.ecommerce.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,9 +34,18 @@ public class Produto {
 	@Column(name = "data_cadastro")
 	private LocalDate dataCadastro;
 	
-	@Column(name = "valor_unitario")
-	private String valorUnitario;
+	@Column(name = "valor_unitario", precision = 10, scale = 2)
+	private BigDecimal valorUnitario;
 	
 	/*@Column(name = "imagem")
 	private  imagem;*/
+	
+	@ManyToOne
+	@JoinColumn(name = "id_categoria")
+	private Categoria categoria;
+	
+	@OneToMany(mappedBy = "produto")
+	private List<ItemPedido> itensPedidos;
+	
+	
 }

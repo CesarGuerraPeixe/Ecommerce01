@@ -13,7 +13,10 @@ public class ProdutoService {
 
 	@Autowired
 	ProdutoRepository produtoRepository;
-
+	
+	@Autowired
+	ImageService imageService;
+	
 	public List<Produto> findAll() {
 		return produtoRepository.findAll();
 	}

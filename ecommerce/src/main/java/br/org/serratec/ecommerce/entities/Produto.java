@@ -37,8 +37,9 @@ public class Produto {
 	@Column(name = "valor_unitario", precision = 10, scale = 2)
 	private BigDecimal valorUnitario;
 	
-	/*@Column(name = "imagem")
-	private  imagem;*/
+
+	@Column(name = "url")
+	private String url;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
@@ -46,6 +47,99 @@ public class Produto {
 	
 	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> itensPedidos;
+
+	
+	public Produto() {
+
+	}
+
+	public Produto(Integer idProduto, String nome, String descricao, BigDecimal qtdEstoque, LocalDate dataCadastro,
+			BigDecimal valorUnitario, String url, Categoria categoria, List<ItemPedido> itensPedidos) {
+		super();
+		this.idProduto = idProduto;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.qtdEstoque = qtdEstoque;
+		this.dataCadastro = dataCadastro;
+		this.valorUnitario = valorUnitario;
+		this.url = url;
+		this.categoria = categoria;
+		this.itensPedidos = itensPedidos;
+	}
+
+	
+	public Integer getIdProduto() {
+		return idProduto;
+	}
+
+	public void setIdProduto(Integer idProduto) {
+		this.idProduto = idProduto;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public BigDecimal getQtdEstoque() {
+		return qtdEstoque;
+	}
+
+	public void setQtdEstoque(BigDecimal qtdEstoque) {
+		this.qtdEstoque = qtdEstoque;
+	}
+
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public List<ItemPedido> getItensPedidos() {
+		return itensPedidos;
+	}
+
+	public void setItensPedidos(List<ItemPedido> itensPedidos) {
+		this.itensPedidos = itensPedidos;
+	}
+
 	
 	
 }

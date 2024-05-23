@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 @Service
 public class EmailService {
 
@@ -34,7 +34,7 @@ public class EmailService {
 
 
 
-	public boolean enviarEmail(RelatorioPedidoDTO relatorioPedidoDTO) {
+	public boolean enviarEmail(RelatorioPedidoDto relatorioPedidoDTO) {
 		// TODO Auto-generated method stub
 		return false;
 	}

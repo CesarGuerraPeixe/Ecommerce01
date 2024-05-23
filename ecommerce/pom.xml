@@ -66,11 +66,6 @@
 
 	</dependencies>
 	
-	
-
-
-	
-
 	<build>
 		<plugins>
 			<plugin>

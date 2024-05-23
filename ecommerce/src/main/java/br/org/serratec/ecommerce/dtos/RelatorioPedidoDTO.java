@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class RelatorioPedidoDTO {
+public class RelatorioPedidoDto {
 
 	private Integer idPedido;
     private LocalDate dataPedido;
     private BigDecimal valorTotal;
     public boolean status;
-    private List<ItemRelatorioDTO> itens;
+    private List<ItemRelatorioDto> itens;
 	
     
     public Integer getIdPedido() {
@@ -31,10 +31,10 @@ public class RelatorioPedidoDTO {
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	public List<ItemRelatorioDTO> getItens() {
+	public List<ItemRelatorioDto> getItens() {
 		return itens;
 	}
-	public void setItens(List<ItemRelatorioDTO> itens) {
+	public void setItens(List<ItemRelatorioDto> itens) {
 		this.itens = itens;
 	}
 	

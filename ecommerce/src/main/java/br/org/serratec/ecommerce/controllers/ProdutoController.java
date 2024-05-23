@@ -3,6 +3,7 @@ package br.org.serratec.ecommerce.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.entities.Image;
 import br.org.serratec.ecommerce.entities.Produto;
+import br.org.serratec.ecommerce.services.ImageService;
 import br.org.serratec.ecommerce.services.ProdutoService;
 
 @RestController
@@ -24,9 +27,21 @@ public class ProdutoController {
 		@Autowired
 		ProdutoService produtoService;
 		
+		@Autowired
+		ImageService imageService;
+		
 		@GetMapping
 		public ResponseEntity<List<Produto>> findAll () {
 			return new ResponseEntity<>(produtoService.findAll(), HttpStatus.OK);
+		}
+		
+		@GetMapping("/{id}/image")
+		public ResponseEntity<byte[]> findByImage(@PathVariable Integer id) {
+			Image image = imageService.findByIdProduto(id);
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-type", image.getTipo());
+			headers.add("Content-length", String.valueOf(image.getDados().length));
+			return new ResponseEntity<>(image.getDados(), headers, HttpStatus.OK);
 		}
 		
 		@GetMapping("/{id}")

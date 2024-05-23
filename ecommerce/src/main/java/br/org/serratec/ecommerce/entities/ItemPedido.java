@@ -19,7 +19,7 @@ public class ItemPedido {
 	private Integer idItemPedido;
 
 	@Column(name = "quantidade", precision = 10, scale = 2)
-	private BigDecimal quantidade;
+	private Integer quantidade;
 
 	@Column(name = "preco_venda", precision = 10, scale = 2)
 	private BigDecimal precoVenda;
@@ -36,9 +36,90 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
+
+	public ItemPedido() {
+		super();
+	}
+
+	public ItemPedido(Integer idItemPedido, Integer quantidade, BigDecimal precoVenda, BigDecimal percentualDesconto,
+			BigDecimal valorBruto, BigDecimal valorLiquido, Produto produto, Pedido pedido) {
+		super();
+		this.idItemPedido = idItemPedido;
+		this.quantidade = quantidade;
+		this.precoVenda = precoVenda;
+		this.percentualDesconto = percentualDesconto;
+		this.valorBruto = valorBruto;
+		this.valorLiquido = valorLiquido;
+		this.produto = produto;
+		this.pedido = pedido;
+	}
+
+	public Integer getIdItemPedido() {
+		return idItemPedido;
+	}
+
+	public void setIdItemPedido(Integer idItemPedido) {
+		this.idItemPedido = idItemPedido;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public BigDecimal getPrecoVenda() {
+		return precoVenda;
+	}
+
+	public void setPrecoVenda(BigDecimal precoVenda) {
+		this.precoVenda = precoVenda;
+	}
+
+	public BigDecimal getPercentualDesconto() {
+		return percentualDesconto;
+	}
+
+	public void setPercentualDesconto(BigDecimal percentualDesconto) {
+		this.percentualDesconto = percentualDesconto;
+	}
+
+	public BigDecimal getValorBruto() {
+		return valorBruto;
+	}
+
+	public void setValorBruto(BigDecimal valorBruto) {
+		this.valorBruto = valorBruto;
+	}
+
+	public BigDecimal getValorLiquido() {
+		return valorLiquido;
+	}
+
+	public void setValorLiquido(BigDecimal valorLiquido) {
+		this.valorLiquido = valorLiquido;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.org.serratec.ecommerce.Dtos.RelatorioPedidoDTO;
+import br.org.serratec.ecommerce.entities.Cliente;
 
 
 
@@ -14,7 +15,7 @@ import br.org.serratec.ecommerce.Dtos.RelatorioPedidoDTO;
 public class CepService {
 	public RelatorioPedidoDTO consultaid(String id) {
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = "viacep.com.br/ws/01001000/json/";
+		String uri = "viacep.com.br/ws/json/";
 		
 		Map<String,String> params = new HashMap<String,String>();
 		

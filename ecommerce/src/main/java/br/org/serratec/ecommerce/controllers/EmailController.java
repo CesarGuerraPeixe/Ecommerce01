@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.org.serratec.ecommerce.services.EmailService;
 
 @RestController
-@RequestMapping("email")
+@RequestMapping("emails")
 public class EmailController {
 	
 	

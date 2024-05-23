@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
 import br.org.serratec.ecommerce.entities.Pedido;
 import br.org.serratec.ecommerce.services.PedidoService;
 
@@ -58,4 +59,9 @@ public class PedidoController {
 	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	        }
 	    }
+		
+		 
+
+		
+		
 }

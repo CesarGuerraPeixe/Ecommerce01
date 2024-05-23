@@ -1,4 +1,4 @@
-package br.org.serratec.ecommerce.Dtos;
+package br.org.serratec.ecommerce.dtos;
 
 public class CepDto {
 	private String cep;

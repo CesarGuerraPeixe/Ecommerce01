@@ -3,7 +3,7 @@ package br.org.serratec.ecommerce.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import br.org.serratec.ecommerce.Dtos.CepDto;
+import br.org.serratec.ecommerce.dtos.CepDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

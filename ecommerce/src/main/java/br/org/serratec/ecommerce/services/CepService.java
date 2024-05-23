@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.org.serratec.ecommerce.Dtos.RelatorioPedidoDTO;
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
 import br.org.serratec.ecommerce.entities.Cliente;
 
 
@@ -20,6 +20,8 @@ public class CepService {
 		Map<String,String> params = new HashMap<String,String>();
 		
 		params.put("id", id);
+		
+		
 		
 		RelatorioPedidoDTO dto = restTemplate.getForObject(uri, RelatorioPedidoDTO.class, params);
 		

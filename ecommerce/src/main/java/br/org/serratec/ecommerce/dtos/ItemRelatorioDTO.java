@@ -1,4 +1,4 @@
-package br.org.serratec.ecommerce.Dtos;
+package br.org.serratec.ecommerce.dtos;
 
 import java.math.BigDecimal;
 

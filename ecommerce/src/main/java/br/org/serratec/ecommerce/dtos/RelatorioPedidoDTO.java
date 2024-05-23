@@ -1,4 +1,4 @@
-package br.org.serratec.ecommerce.Dtos;
+package br.org.serratec.ecommerce.dtos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +9,7 @@ public class RelatorioPedidoDTO {
 	private Integer idPedido;
     private LocalDate dataPedido;
     private BigDecimal valorTotal;
+    public boolean status;
     private List<ItemRelatorioDTO> itens;
 	
     
@@ -37,6 +38,14 @@ public class RelatorioPedidoDTO {
 		this.itens = itens;
 	}
 	
+	
+	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "RelatorioPedidoDTO [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", valorTotal=" + valorTotal

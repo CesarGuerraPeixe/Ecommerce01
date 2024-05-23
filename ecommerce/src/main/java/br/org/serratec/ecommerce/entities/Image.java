@@ -15,19 +15,18 @@ public class Image {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_image")
 	private Integer id;
-	
+
 	@Lob
-	private byte [] dados;
-	
+	private byte[] dados;
+
 	private String tipo;
 	private String nome;
-	
+
 	@OneToOne
-	@JoinColumn(name="id_produto")
+	@JoinColumn(name = "id_produto")
 	private Produto produto;
-	
+
 	public Image() {
-		super();
 	}
 
 	public Image(Integer id, byte[] dados, String tipo, String nome, Produto produto) {
@@ -39,7 +38,6 @@ public class Image {
 		this.produto = produto;
 	}
 
-	
 	public Integer getId() {
 		return id;
 	}
@@ -79,5 +77,5 @@ public class Image {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
-	
+
 }

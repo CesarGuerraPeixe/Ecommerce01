@@ -45,7 +45,6 @@ public class Pedido {
 	private List<ItemPedido> itensPedidos;
 
 	public Pedido() {
-		super();
 	}
 
 	public Pedido(Integer idPedido, LocalDate dataPedido, LocalDate dataEntrega, LocalDate dataEnvio, Boolean status,
@@ -124,7 +123,5 @@ public class Pedido {
 	public void setItensPedidos(List<ItemPedido> itensPedidos) {
 		this.itensPedidos = itensPedidos;
 	}
-	
-	
 
 }

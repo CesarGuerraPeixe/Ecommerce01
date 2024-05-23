@@ -1,7 +1,6 @@
 package br.org.serratec.ecommerce.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -32,6 +31,13 @@ public class EmailService {
 			System.out.println("Ocorreu um erro ao tentar enviar o e-mail: " 
 					+ ex.getMessage());}
 		}
+
+
+
+	public boolean enviarEmail(RelatorioPedidoDTO relatorioPedidoDTO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	
 		

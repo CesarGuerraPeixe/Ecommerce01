@@ -21,36 +21,33 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
 	private Integer idProduto;
-	
+
 	@Column(name = "nome")
 	private String nome;
-	
+
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@Column(name = "qtd_estoque", precision = 10, scale = 2)
 	private BigDecimal qtdEstoque;
-	
+
 	@Column(name = "data_cadastro")
 	private LocalDate dataCadastro;
-	
+
 	@Column(name = "valor_unitario", precision = 10, scale = 2)
 	private BigDecimal valorUnitario;
-	
 
 	@Column(name = "url")
 	private String url;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
-	
+
 	@OneToMany(mappedBy = "produto")
 	private List<ItemPedido> itensPedidos;
 
-	
 	public Produto() {
-
 	}
 
 	public Produto(Integer idProduto, String nome, String descricao, BigDecimal qtdEstoque, LocalDate dataCadastro,
@@ -67,7 +64,6 @@ public class Produto {
 		this.itensPedidos = itensPedidos;
 	}
 
-	
 	public Integer getIdProduto() {
 		return idProduto;
 	}
@@ -140,6 +136,4 @@ public class Produto {
 		this.itensPedidos = itensPedidos;
 	}
 
-	
-	
 }

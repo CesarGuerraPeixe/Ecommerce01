@@ -45,7 +45,6 @@ public class Pedido {
 	private List<ItemPedido> itensPedidos;
 
 	public Pedido() {
-		super();
 	}
 
 	public Pedido(Integer idPedido, LocalDate dataPedido, LocalDate dataEntrega, LocalDate dataEnvio, Boolean status,
@@ -125,6 +124,7 @@ public class Pedido {
 		this.itensPedidos = itensPedidos;
 	}
 
+
 	public static boolean existsById(Integer id) {
 		// TODO Auto-generated method stub
 		return false;
@@ -141,5 +141,6 @@ public class Pedido {
 	}
 	
 	
+
 
 }

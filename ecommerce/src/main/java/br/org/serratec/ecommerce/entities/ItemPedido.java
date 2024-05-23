@@ -42,7 +42,6 @@ public class ItemPedido {
 	private Pedido pedido;
 
 	public ItemPedido() {
-		super();
 	}
 
 	public ItemPedido(Integer idItemPedido, Integer quantidade, BigDecimal precoVenda, BigDecimal percentualDesconto,

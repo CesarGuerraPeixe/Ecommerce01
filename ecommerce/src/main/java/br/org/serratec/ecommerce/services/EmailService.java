@@ -3,7 +3,6 @@ package br.org.serratec.ecommerce.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
@@ -15,7 +14,7 @@ public class EmailService {
 	
 	
 	
-	@Async
+	
 	
 	public void enviarEmail(String destinatario, String assunto, String mensagem) {
 		var mailMessage = new SimpleMailMessage();

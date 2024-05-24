@@ -17,29 +17,29 @@ public class PedidoService {
 	@Autowired
 	PedidoRepository pedidoRepository;
 
+	public Pedido salvarPedido(Pedido pedido) {
+		BigDecimal valorTotal = BigDecimal.ZERO;
+		for (ItemPedido item : pedido.getItensPedidos()) {
+			BigDecimal valorBruto = item.getPrecoVenda().multiply(BigDecimal.valueOf(item.getQuantidade()));
+			BigDecimal valorDesconto = valorBruto
+					.multiply(item.getPercentualDesconto().divide(BigDecimal.valueOf(100)));
+			BigDecimal valorLiquido = valorBruto.subtract(valorDesconto);
 
-    public Pedido salvarPedido(Pedido pedido) {
-        BigDecimal valorTotal = BigDecimal.ZERO;
-        for (ItemPedido item : pedido.getItensPedidos()) {
-            BigDecimal valorBruto = item.getPrecoVenda().multiply(BigDecimal.valueOf(item.getQuantidade()));
-            BigDecimal valorDesconto = valorBruto.multiply(item.getPercentualDesconto().divide(BigDecimal.valueOf(100)));
-            BigDecimal valorLiquido = valorBruto.subtract(valorDesconto);
+			item.setValorBruto(valorBruto);
+			item.setValorLiquido(valorLiquido);
+			valorTotal = valorTotal.add(valorLiquido);
+		}
+		pedido.setValorTotal(valorTotal);
+		pedido.setStatus(false);
+		return pedidoRepository.save(pedido);
+	}
 
-            item.setValorBruto(valorBruto);
-            item.setValorLiquido(valorLiquido);
-            valorTotal = valorTotal.add(valorLiquido);
-        }
-        pedido.setValorTotal(valorTotal);
-        pedido.setStatus(false);
-        return pedidoRepository.save(pedido);
-    }
-
-    public Pedido atualizarStatus(Integer pedidoId, boolean novoStatus) {
-        Pedido pedido = pedidoRepository.findById(pedidoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com id: " + pedidoId));
-        pedido.setStatus(novoStatus);
-        return pedidoRepository.save(pedido);
-    }
+	public Pedido atualizarStatus(Integer pedidoId, boolean novoStatus) {
+		Pedido pedido = pedidoRepository.findById(pedidoId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado com id: " + pedidoId));
+		pedido.setStatus(novoStatus);
+		return pedidoRepository.save(pedido);
+	}
 
 	public List<Pedido> findAll() {
 		return pedidoRepository.findAll();

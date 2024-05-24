@@ -21,41 +21,41 @@ import br.org.serratec.ecommerce.services.CategoriaService;
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-		@Autowired
-		CategoriaService categoriaService;
-		
-		@GetMapping
-		public ResponseEntity<List<Categoria>> findAll () {
-			return new ResponseEntity<>(categoriaService.findAll(), HttpStatus.OK);
-		}
-		
-		@GetMapping("/{id}")
-		public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
-			Categoria categoria = categoriaService.findById(id);
-			
-			if(categoria == null)
-				return new ResponseEntity<>(categoria, HttpStatus.NOT_FOUND);
-			else
-				return new ResponseEntity<>(categoria, HttpStatus.OK);
-		}
+	@Autowired
+	CategoriaService categoriaService;
 
-		@PostMapping
-		public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
-			return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
+	@GetMapping
+	public ResponseEntity<List<Categoria>> findAll() {
+		return new ResponseEntity<>(categoriaService.findAll(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
+		Categoria categoria = categoriaService.findById(id);
+
+		if (categoria == null)
+			return new ResponseEntity<>(categoria, HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<>(categoria, HttpStatus.OK);
+	}
+
+	@PostMapping
+	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
+		return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
+	}
+
+	@PutMapping
+	public ResponseEntity<Categoria> update(@RequestBody Categoria categoria) {
+		return new ResponseEntity<>(categoriaService.update(categoria), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteCategoriaById(@PathVariable Integer id) {
+		boolean deleted = categoriaService.deleteById2(id);
+		if (deleted) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		@PutMapping
-		public ResponseEntity<Categoria> update(@RequestBody Categoria categoria) {
-			return new ResponseEntity<>(categoriaService.update(categoria), HttpStatus.OK);
-		}
-		
-		@DeleteMapping("/{id}")
-	    public ResponseEntity<String> deleteCategoriaById(@PathVariable Integer id) {
-	        boolean deleted = categoriaService.deleteById2(id);
-	        if (deleted) {
-	            return new ResponseEntity<>(HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	        }
-	    }
+	}
 }

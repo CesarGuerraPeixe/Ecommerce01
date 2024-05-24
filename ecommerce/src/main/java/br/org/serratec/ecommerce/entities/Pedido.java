@@ -124,7 +124,6 @@ public class Pedido {
 		this.itensPedidos = itensPedidos;
 	}
 
-
 	public static boolean existsById(Integer id) {
 		// TODO Auto-generated method stub
 		return false;
@@ -132,15 +131,12 @@ public class Pedido {
 
 	public static void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static Object findById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-
 
 }

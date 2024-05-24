@@ -9,7 +9,7 @@ import br.org.serratec.ecommerce.entities.Image;
 import br.org.serratec.ecommerce.entities.Produto;
 
 @Repository
-public interface ImageRepository extends JpaRepository<Image, Integer>{
+public interface ImageRepository extends JpaRepository<Image, Integer> {
 	public Optional<Image> findByProduto(Produto produto);
 
 }

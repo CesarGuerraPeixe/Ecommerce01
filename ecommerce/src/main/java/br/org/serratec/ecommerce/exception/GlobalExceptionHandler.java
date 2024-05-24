@@ -13,4 +13,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(EmailSendException.class)
+	public ResponseEntity<String> handleEmailSendException(EmailSendException ex) {
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 }

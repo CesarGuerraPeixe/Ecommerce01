@@ -5,10 +5,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 @Service
 public class EmailService {
 
+	
+	EmailService emailService = new EmailService();
+	
+	
 	@Autowired
 	public JavaMailSender emailSender;
 	
@@ -16,8 +20,10 @@ public class EmailService {
 	
 	
 	
-	public void enviarEmail(String destinatario, String assunto, String mensagem) {
+	public boolean enviarEmail(String destinatario, String assunto, String mensagem) {
 		var mailMessage = new SimpleMailMessage();
+		
+		return emailService;
 		
 		mailMessage.setTo(destinatario);
 		mailMessage.setSubject(assunto);
@@ -33,7 +39,7 @@ public class EmailService {
 
 
 
-	public boolean enviarEmail(RelatorioPedidoDTO relatorioPedidoDTO) {
+	public boolean enviarEmail(RelatorioPedidoDto relatorioPedidoDTO) {
 		// TODO Auto-generated method stub
 		return false;
 	}

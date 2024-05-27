@@ -17,11 +17,11 @@ import jakarta.transaction.Transactional;
 public class ImageService {
 	@Autowired
 	private ImageRepository imageRepository;
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
-	public Image insere(Produto produto,MultipartFile file) throws IOException{
+
+	public Image insere(Produto produto, MultipartFile file) throws IOException {
 		Image image = new Image();
 		image.setNome(file.getName());
 		image.setTipo(file.getContentType());
@@ -29,12 +29,12 @@ public class ImageService {
 		image.setProduto(produto);
 		return imageRepository.save(image);
 	}
-	
+
 	@Transactional
-	public Image findByIdProduto (Integer id) {
-		//Produto produto = new Produto();
-		//Produto.setId(id);
-		
+	public Image findByIdProduto(Integer id) {
+		// Produto produto = new Produto();
+		// Produto.setId(id);
+
 		Produto produto = produtoRepository.findById(id).orElse(null);
 		Optional<Image> image = imageRepository.findByProduto(produto);
 		if (!image.isPresent()) {

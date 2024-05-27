@@ -21,41 +21,41 @@ import br.org.serratec.ecommerce.services.ClienteService;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-		@Autowired
-		ClienteService clienteService;
-		
-		@GetMapping
-		public ResponseEntity<List<Cliente>> findAll () {
-			return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
-		}
-		
-		@GetMapping("/{id}")
-		public ResponseEntity<Cliente> findById(@PathVariable Integer id) {
-			Cliente cliente = clienteService.findById(id);
-			
-			if(cliente == null)
-				return new ResponseEntity<>(cliente, HttpStatus.NOT_FOUND);
-			else
-				return new ResponseEntity<>(cliente, HttpStatus.OK);
-		}
+	@Autowired
+	ClienteService clienteService;
 
-		@PostMapping
-		public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
-			return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
+	@GetMapping
+	public ResponseEntity<List<Cliente>> findAll() {
+		return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Cliente> findById(@PathVariable Integer id) {
+		Cliente cliente = clienteService.findById(id);
+
+		if (cliente == null)
+			return new ResponseEntity<>(cliente, HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<>(cliente, HttpStatus.OK);
+	}
+
+	@PostMapping
+	public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
+		return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
+	}
+
+	@PutMapping
+	public ResponseEntity<Cliente> update(@RequestBody Cliente cliente) {
+		return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteClienteById(@PathVariable Integer id) {
+		boolean deleted = clienteService.deleteById2(id);
+		if (deleted) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
-		@PutMapping
-		public ResponseEntity<Cliente> update(@RequestBody Cliente cliente) {
-			return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
-		}
-		
-		@DeleteMapping("/{id}")
-	    public ResponseEntity<String> deleteClienteById(@PathVariable Integer id) {
-	        boolean deleted = clienteService.deleteById2(id);
-	        if (deleted) {
-	            return new ResponseEntity<>(HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-	        }
-	    }
+	}
 }

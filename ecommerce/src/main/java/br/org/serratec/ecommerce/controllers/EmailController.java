@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 import br.org.serratec.ecommerce.services.EmailService;
 
 @RestController
@@ -22,8 +22,8 @@ public class EmailController {
 	}
 
 	@PostMapping("/enviar")
-    public ResponseEntity<String> sendEmail(@RequestBody RelatorioPedidoDTO relatorioPedidoDTO) {
-        boolean isSent = emailService.enviarEmail(relatorioPedidoDTO);
+    public ResponseEntity<String> sendEmail(@RequestBody RelatorioPedidoDto relatorioPedidoDto) {
+        boolean isSent = emailService.enviarEmail("enzo.front17@gmail.com", "Email para teste", "<html> relatorioPedidoDTO </html>");
         if (isSent) {
             return new ResponseEntity<>("Email enviado com sucesso!", HttpStatus.OK);
         } else {

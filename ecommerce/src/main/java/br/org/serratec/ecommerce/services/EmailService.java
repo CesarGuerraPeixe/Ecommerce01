@@ -4,46 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import br.org.serratec.ecommerce.dtos.RelatorioPedidoDto;
 @Service
 public class EmailService {
 
-	
-	EmailService emailService = new EmailService();
-	
-	
 	@Autowired
 	public JavaMailSender emailSender;
 	
+	public EmailService(JavaMailSender javaMailSender) {
+		this.emailSender = javaMailSender;
+	}
 	
-	
-	
-	
-	public boolean enviarEmail(String destinatario, String assunto, String mensagem) {
+	public void enviarEmail(String destinatario, String assunto, String mensagem) {
 		var mailMessage = new SimpleMailMessage();
-		
-		return emailService;
 		
 		mailMessage.setTo(destinatario);
 		mailMessage.setSubject(assunto);
 		mailMessage.setText(mensagem);
-		mailMessage.setFrom("enzo.front17@gmail.com");
+		mailMessage.setFrom("teste@gmail.com");
 		
 		try {
 			emailSender.send(mailMessage);
-		}catch(Exception ex) {
+			System.out.println("email enviado");
+		} catch(Exception ex) {
 			System.out.println("Ocorreu um erro ao tentar enviar o e-mail: " 
-					+ ex.getMessage());}
+					+ ex.getMessage());
 		}
-
-
-
-	public boolean enviarEmail(RelatorioPedidoDto relatorioPedidoDTO) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
-
 	
 		
 		

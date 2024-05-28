@@ -1,8 +1,11 @@
 package br.org.serratec.ecommerce.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,87 +19,88 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedido")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPedido", scope = Pedido.class)
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pedido")
-	private Integer idPedido;
+	private Long idPedido;
 
 	@Column(name = "data_pedido")
-	private LocalDate dataPedido;
-
-	@Column(name = "data_entrega")
-	private LocalDate dataEntrega;
+	private Date dataPedido = new Date();
 
 	@Column(name = "data_envio")
-	private LocalDate dataEnvio;
+	private Date dataEnvio;
+
+	@Column(name = "data_entrega")
+	private Date dataEntrega;
 
 	@Column(name = "status")
-	private Boolean status;
+	private String status;
 
-	@Column(name = "valor_total", precision = 10, scale = 2)
+	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
-
-	@ManyToOne
-	@JoinColumn(name = "id_cliente")
-	private Cliente cliente;
 
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itensPedidos;
 
+	@ManyToOne
+	@JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente", nullable = false)
+	private Cliente cliente;
+
 	public Pedido() {
 	}
 
-	public Pedido(Integer idPedido, LocalDate dataPedido, LocalDate dataEntrega, LocalDate dataEnvio, Boolean status,
-			BigDecimal valorTotal, Cliente cliente, List<ItemPedido> itensPedidos) {
-		super();
-		this.idPedido = idPedido;
-		this.dataPedido = dataPedido;
-		this.dataEntrega = dataEntrega;
-		this.dataEnvio = dataEnvio;
-		this.status = status;
-		this.valorTotal = valorTotal;
-		this.cliente = cliente;
-		this.itensPedidos = itensPedidos;
+	public void gerarValorTotal(Pedido pedido) {
+		BigDecimal valorTotal = new BigDecimal(0);
+		if (pedido.getItensPedidos() != null) {
+			for (ItemPedido itemPedido : pedido.getItensPedidos()) {
+				valorTotal = valorTotal.add(itemPedido.getValorLiquido());
+			}
+			System.out.println("\n\n\n\n" + valorTotal + "\n\n\n\n\n\n");
+		} else {
+			System.out.println("\n\n\n\nitem pedido e nulo\n\n\n\n\n");
+		}
+		pedido.setValorTotal(valorTotal);
 	}
 
-	public Integer getIdPedido() {
+	public Long getIdPedido() {
 		return idPedido;
 	}
 
-	public void setIdPedido(Integer idPedido) {
+	public void setIdPedido(Long idPedido) {
 		this.idPedido = idPedido;
 	}
 
-	public LocalDate getDataPedido() {
+	public Date getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(LocalDate dataPedido) {
+	public void setDataPedido(Date dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 
-	public LocalDate getDataEntrega() {
-		return dataEntrega;
-	}
-
-	public void setDataEntrega(LocalDate dataEntrega) {
-		this.dataEntrega = dataEntrega;
-	}
-
-	public LocalDate getDataEnvio() {
+	public Date getDataEnvio() {
 		return dataEnvio;
 	}
 
-	public void setDataEnvio(LocalDate dataEnvio) {
+	public void setDataEnvio(Date dataEnvio) {
 		this.dataEnvio = dataEnvio;
 	}
 
-	public Boolean getStatus() {
+	public Date getDataEntrega() {
+		return dataEntrega;
+	}
+
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
+	}
+
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -108,14 +112,6 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public List<ItemPedido> getItensPedidos() {
 		return itensPedidos;
 	}
@@ -124,19 +120,12 @@ public class Pedido {
 		this.itensPedidos = itensPedidos;
 	}
 
-	public static boolean existsById(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public static void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static Object findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 }

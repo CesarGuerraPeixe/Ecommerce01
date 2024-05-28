@@ -2,6 +2,7 @@ package br.org.serratec.ecommerce.configs;
 
 import java.util.Arrays;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,11 @@ public class WebSecurityConfig {
 	UserDetailsServiceImpl userDetailsService;
 
 	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors(Customizer.withDefaults()) // habilita o cors e aplica o metodo (abaixo) corsConfigurationSource
 				.csrf(csrf -> csrf.disable()) // desabilita o csrf
@@ -41,8 +47,9 @@ public class WebSecurityConfig {
 								"/v3/api-docs/**")
 						.permitAll() // define as rotas publicas/abertas
 						.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // autoriza o acesso a rotas por perfis
-						.anyRequest().authenticated()) // demais rotas, nao configuradas acima, so poderao ser acessadas
-														// mediante autenticacao
+						.anyRequest().permitAll()) // authenticated // demais rotas, nao configuradas acima, so poderao
+													// ser acessadas
+													// mediante autenticacao
 		;
 
 		http.authenticationProvider(authenticationProvider()); // define o provedor de autenticacao

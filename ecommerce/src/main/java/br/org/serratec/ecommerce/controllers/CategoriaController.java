@@ -30,18 +30,14 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> findById(@PathVariable Long id) {
 		Categoria categoria = categoriaService.findById(id);
-
-		if (categoria == null)
-			return new ResponseEntity<>(categoria, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(categoria, HttpStatus.OK);
+		return new ResponseEntity<>(categoria, HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<Categoria> save(@RequestBody Categoria categoria) {
-		return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.CREATED);
+		return new ResponseEntity<>(categoriaService.save(categoria), HttpStatus.OK);
 	}
 
 	@PutMapping
@@ -49,13 +45,13 @@ public class CategoriaController {
 		return new ResponseEntity<>(categoriaService.update(categoria), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteCategoriaById(@PathVariable Integer id) {
-		boolean deleted = categoriaService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody Categoria categoria) {
+		if (categoriaService.delete(categoria)) {
+			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Não foi possível deletar", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

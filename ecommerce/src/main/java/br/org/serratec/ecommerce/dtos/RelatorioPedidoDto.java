@@ -1,30 +1,43 @@
 package br.org.serratec.ecommerce.dtos;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
-public class RelatorioPedidoDto {
+public class RelatorioPedidoDTO {
 
-	private Integer idPedido;
-	private LocalDate dataPedido;
+	private Long idPedido;
+
+	private Date dataPedido;
+
 	private BigDecimal valorTotal;
-	public boolean status;
-	private List<ItemRelatorioDto> itens;
 
-	public Integer getIdPedido() {
+	private List<ItemPedidoDTO> itemPedidos;
+
+	public RelatorioPedidoDTO() {
+
+	}
+
+	public RelatorioPedidoDTO(Long idPedido, Date dataPedido, BigDecimal valorTotal, List<ItemPedidoDTO> itemPedidos) {
+		this.idPedido = idPedido;
+		this.dataPedido = dataPedido;
+		this.valorTotal = valorTotal;
+		this.itemPedidos = itemPedidos;
+	}
+
+	public Long getIdPedido() {
 		return idPedido;
 	}
 
-	public void setIdPedido(Integer idPedido) {
+	public void setIdPedido(Long idPedido) {
 		this.idPedido = idPedido;
 	}
 
-	public LocalDate getDataPedido() {
+	public Date getDataPedido() {
 		return dataPedido;
 	}
 
-	public void setDataPedido(LocalDate dataPedido) {
+	public void setDataPedido(Date dataPedido) {
 		this.dataPedido = dataPedido;
 	}
 
@@ -36,26 +49,19 @@ public class RelatorioPedidoDto {
 		this.valorTotal = valorTotal;
 	}
 
-	public List<ItemRelatorioDto> getItens() {
-		return itens;
+	public List<ItemPedidoDTO> getItemPedidos() {
+		return itemPedidos;
 	}
 
-	public void setItens(List<ItemRelatorioDto> itens) {
-		this.itens = itens;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setItemPedidos(List<ItemPedidoDTO> itemPedidos) {
+		this.itemPedidos = itemPedidos;
 	}
 
 	@Override
 	public String toString() {
-		return "RelatorioPedidoDTO [idPedido=" + idPedido + ", dataPedido=" + dataPedido + ", valorTotal=" + valorTotal
-				+ ", itens=" + itens + "]";
+		return "************** RELATÓRIO PEDIDO **************\n\n" + "Id do Pedido: " + idPedido + "\nData do Pedido: "
+				+ dataPedido + "\nValor Total: " + valorTotal + "\n\n********* ITENS PEDIDOS *********\n\n"
+				+ itemPedidos;
 	}
 
 }

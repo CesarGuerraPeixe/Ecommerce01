@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.ClienteDTO;
 import br.org.serratec.ecommerce.entities.Cliente;
 import br.org.serratec.ecommerce.services.ClienteService;
 
@@ -25,23 +26,19 @@ public class ClienteController {
 	ClienteService clienteService;
 
 	@GetMapping
-	public ResponseEntity<List<Cliente>> findAll() {
+	public ResponseEntity<List<ClienteDTO>> findAll() {
 		return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> findById(@PathVariable Integer id) {
+	public ResponseEntity<Cliente> findById(@PathVariable Long id) {
 		Cliente cliente = clienteService.findById(id);
-
-		if (cliente == null)
-			return new ResponseEntity<>(cliente, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(cliente, HttpStatus.OK);
+		return new ResponseEntity<>(cliente, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
-		return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
+	public ResponseEntity<ClienteDTO> save(@RequestBody Cliente cliente) {
+		return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.OK);
 	}
 
 	@PutMapping
@@ -49,13 +46,13 @@ public class ClienteController {
 		return new ResponseEntity<>(clienteService.update(cliente), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteClienteById(@PathVariable Integer id) {
-		boolean deleted = clienteService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody Cliente cliente) {
+		if (clienteService.delete(cliente)) {
+			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Não foi possível deletar", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

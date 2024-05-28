@@ -21,21 +21,30 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "id_user")
+	private Long id;
 
-	@Column(unique = true)
+	@Column(name = "email", unique = true)
 	private String email;
 
+	@Column(name = "password")
 	private String password;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id"))
 	private List<Role> roles;
 
 	public User() {
 	}
 
-	public User(Integer id, String email, String password, List<Role> roles) {
+	public User(String email, String password, List<Role> roles) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public User(Long id, String email, String password, List<Role> roles) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -43,17 +52,11 @@ public class User {
 		this.roles = roles;
 	}
 
-	public User(String email, String password, List<Role> roles) {
-		this.email = email;
-		this.password = password;
-		this.roles = roles;
-	}
-
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -1,66 +1,60 @@
 package br.org.serratec.ecommerce.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCliente", scope = Cliente.class)
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
-	private Integer idCliente;
+	private Long idCliente;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 
 	@Column(name = "nome_completo")
 	private String nomeCompleto;
 
-	@Column(name = "cpf")
+	@Column(name = "cpf", unique = true, nullable = false)
 	private String cpf;
 
 	@Column(name = "telefone")
 	private String telefone;
 
 	@Column(name = "data_nascimento")
-	private LocalDate dataNascimento;
+	private Date dataNascimento;
 
-	@OneToOne(mappedBy = "cliente")
+	@OneToOne
+	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco", unique = true, nullable = false)
 	private Endereco endereco;
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 
 	public Cliente() {
 	}
 
-	public Cliente(Integer idCliente, String email, String nomeCompleto, String cpf, String telefone,
-			LocalDate dataNascimento, Endereco endereco, List<Pedido> pedidos) {
-		super();
-		this.idCliente = idCliente;
-		this.email = email;
-		this.nomeCompleto = nomeCompleto;
-		this.cpf = cpf;
-		this.telefone = telefone;
-		this.dataNascimento = dataNascimento;
-		this.endereco = endereco;
-		this.pedidos = pedidos;
-	}
-
-	public Integer getIdCliente() {
+	public Long getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(Integer idCliente) {
+	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -96,11 +90,11 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public LocalDate getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

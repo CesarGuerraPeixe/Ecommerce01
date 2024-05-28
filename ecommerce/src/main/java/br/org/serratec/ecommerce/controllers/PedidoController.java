@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.RelatorioPedidoDTO;
 import br.org.serratec.ecommerce.entities.Pedido;
 import br.org.serratec.ecommerce.services.PedidoService;
 
@@ -22,41 +23,45 @@ import br.org.serratec.ecommerce.services.PedidoService;
 public class PedidoController {
 
 	@Autowired
-	PedidoService controllerService;
+	PedidoService pedidoService;
 
 	@GetMapping
-	public ResponseEntity<List<Pedido>> findAll() {
-		return new ResponseEntity<>(controllerService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<RelatorioPedidoDTO>> findAll() {
+		return new ResponseEntity<>(pedidoService.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Pedido> findById(@PathVariable Integer id) {
-		Pedido controller = controllerService.findById(id);
+	public ResponseEntity<Pedido> findById(@PathVariable Long id) {
+		Pedido pedido = pedidoService.findById(id);
+		if (pedido == null) {
+			return new ResponseEntity<>(pedido, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(pedido, HttpStatus.OK);
+		}
+	}
 
-		if (controller == null)
-			return new ResponseEntity<>(controller, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(controller, HttpStatus.OK);
+	@GetMapping("/relatorio/{id}")
+	public ResponseEntity<RelatorioPedidoDTO> gerarRelatorioPedidoDTO(@PathVariable Long id) {
+		Pedido pedido = pedidoService.findById(id);
+		return new ResponseEntity<>(pedidoService.gerarRelatorioDTO(pedido), HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Pedido> save(@RequestBody Pedido controller) {
-		return new ResponseEntity<>(controllerService.save(controller), HttpStatus.CREATED);
+	public ResponseEntity<RelatorioPedidoDTO> save(@RequestBody Pedido pedido) {
+		return new ResponseEntity<>(pedidoService.save(pedido), HttpStatus.CREATED);
 	}
 
 	@PutMapping
-	public ResponseEntity<Pedido> update(@RequestBody Pedido controller) {
-		return new ResponseEntity<>(controllerService.update(controller), HttpStatus.OK);
+	public ResponseEntity<Pedido> update(@RequestBody Pedido pedido) {
+		return new ResponseEntity<>(pedidoService.update(pedido), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletePedidoById(@PathVariable Integer id) {
-		boolean deleted = controllerService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody Pedido pedido) {
+		if (pedidoService.delete(pedido))
+			return new ResponseEntity<>("Deletado com sucesso.", HttpStatus.OK);
+		else
+			return new ResponseEntity<>("Não foi possível deletar.", HttpStatus.BAD_REQUEST);
 	}
 
 }

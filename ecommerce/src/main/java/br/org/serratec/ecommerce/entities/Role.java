@@ -1,5 +1,6 @@
 package br.org.serratec.ecommerce.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,27 +10,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "perfil")
+@Table(name = "roles")
 public class Role {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	private RoleEnum nome;
+	@Column
+	private RoleEnum name;
 
 	public Role() {
+
 	}
 
-	public Role(Integer id, RoleEnum nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-	}
-
-	public Role(RoleEnum nome) {
-		this.nome = nome;
+	public Role(RoleEnum name) {
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -40,12 +36,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public RoleEnum getNome() {
-		return nome;
+	public RoleEnum getName() {
+		return name;
 	}
 
-	public void setNome(RoleEnum nome) {
-		this.nome = nome;
+	public void setName(RoleEnum name) {
+		this.name = name;
 	}
-
 }

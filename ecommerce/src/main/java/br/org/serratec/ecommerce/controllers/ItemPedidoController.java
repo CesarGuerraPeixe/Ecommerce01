@@ -20,6 +20,7 @@ import br.org.serratec.ecommerce.services.ItemPedidoService;
 @RestController
 @RequestMapping("/itensPedidos")
 public class ItemPedidoController {
+
 	@Autowired
 	ItemPedidoService itemPedidoService;
 
@@ -29,13 +30,9 @@ public class ItemPedidoController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ItemPedido> findById(@PathVariable Integer id) {
+	public ResponseEntity<ItemPedido> findById(@PathVariable Long id) {
 		ItemPedido itemPedido = itemPedidoService.findById(id);
-
-		if (itemPedido == null)
-			return new ResponseEntity<>(itemPedido, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(itemPedido, HttpStatus.OK);
+		return new ResponseEntity<>(itemPedido, HttpStatus.OK);
 	}
 
 	@PostMapping
@@ -48,14 +45,12 @@ public class ItemPedidoController {
 		return new ResponseEntity<>(itemPedidoService.update(itemPedido), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteItemPedidoById(@PathVariable Integer id) {
-		boolean deleted = itemPedidoService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody ItemPedido itemPedido) {
+		if (itemPedidoService.delete(itemPedido))
+			return new ResponseEntity<>("Deletado com sucesso.", HttpStatus.OK);
+		else
+			return new ResponseEntity<>("Não foi possível deletar.", HttpStatus.BAD_REQUEST);
 	}
 
 }

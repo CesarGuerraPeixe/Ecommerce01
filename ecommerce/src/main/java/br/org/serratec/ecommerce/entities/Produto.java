@@ -1,8 +1,11 @@
 package br.org.serratec.ecommerce.entities;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,42 +19,43 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "produto")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto", scope = Produto.class)
 public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
-	private Integer idProduto;
+	private Long idProduto;
 
 	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "descricao")
+	@Column(name = "descricao", unique = true, nullable = false)
 	private String descricao;
 
-	@Column(name = "qtd_estoque", precision = 10, scale = 2)
-	private BigDecimal qtdEstoque;
+	@Column(name = "qtd_estoque", nullable = false)
+	private Integer qtdEstoque;
 
 	@Column(name = "data_cadastro")
-	private LocalDate dataCadastro;
+	private Date dataCadastro = new Date();
 
-	@Column(name = "valor_unitario", precision = 10, scale = 2)
+	@Column(name = "valor_unitario", nullable = false)
 	private BigDecimal valorUnitario;
 
-	@Column(name = "url")
-	private String url;
-
-	@ManyToOne
-	@JoinColumn(name = "id_categoria")
-	private Categoria categoria;
+	@Column(name = "imagem")
+	private byte[] imagem;
 
 	@OneToMany(mappedBy = "produto")
-	private List<ItemPedido> itensPedidos;
+	private List<ItemPedido> itemPedidos;
+
+	@ManyToOne
+	@JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria", nullable = false)
+	private Categoria categoria;
 
 	public Produto() {
 	}
 
-	public Produto(Integer idProduto, String nome, String descricao, BigDecimal qtdEstoque, LocalDate dataCadastro,
-			BigDecimal valorUnitario, String url, Categoria categoria, List<ItemPedido> itensPedidos) {
+	public Produto(Long idProduto, String nome, String descricao, Integer qtdEstoque, Date dataCadastro,
+			BigDecimal valorUnitario, byte[] imagem, List<ItemPedido> itemPedidos, Categoria categoria) {
 		super();
 		this.idProduto = idProduto;
 		this.nome = nome;
@@ -59,16 +63,16 @@ public class Produto {
 		this.qtdEstoque = qtdEstoque;
 		this.dataCadastro = dataCadastro;
 		this.valorUnitario = valorUnitario;
-		this.url = url;
+		this.imagem = imagem;
+		this.itemPedidos = itemPedidos;
 		this.categoria = categoria;
-		this.itensPedidos = itensPedidos;
 	}
 
-	public Integer getIdProduto() {
+	public Long getIdProduto() {
 		return idProduto;
 	}
 
-	public void setIdProduto(Integer idProduto) {
+	public void setIdProduto(Long idProduto) {
 		this.idProduto = idProduto;
 	}
 
@@ -88,19 +92,19 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getQtdEstoque() {
+	public Integer getQtdEstoque() {
 		return qtdEstoque;
 	}
 
-	public void setQtdEstoque(BigDecimal qtdEstoque) {
+	public void setQtdEstoque(Integer qtdEstoque) {
 		this.qtdEstoque = qtdEstoque;
 	}
 
-	public LocalDate getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -112,12 +116,20 @@ public class Produto {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public String getUrl() {
-		return url;
+	public byte[] getImagem() {
+		return imagem;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
+	}
+
+	public List<ItemPedido> getItemPedidos() {
+		return itemPedidos;
+	}
+
+	public void setItemPedidos(List<ItemPedido> itemPedidos) {
+		this.itemPedidos = itemPedidos;
 	}
 
 	public Categoria getCategoria() {
@@ -126,14 +138,6 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
-	}
-
-	public List<ItemPedido> getItensPedidos() {
-		return itensPedidos;
-	}
-
-	public void setItensPedidos(List<ItemPedido> itensPedidos) {
-		this.itensPedidos = itensPedidos;
 	}
 
 }

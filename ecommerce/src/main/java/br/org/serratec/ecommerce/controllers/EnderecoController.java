@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.ecommerce.dtos.EnderecoDTO;
 import br.org.serratec.ecommerce.entities.Endereco;
 import br.org.serratec.ecommerce.services.EnderecoService;
 
@@ -25,23 +26,19 @@ public class EnderecoController {
 	EnderecoService enderecoService;
 
 	@GetMapping
-	public ResponseEntity<List<Endereco>> findAll() {
+	public ResponseEntity<List<EnderecoDTO>> findAll() {
 		return new ResponseEntity<>(enderecoService.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Endereco> findById(@PathVariable Integer id) {
+	public ResponseEntity<Endereco> findById(@PathVariable Long id) {
 		Endereco endereco = enderecoService.findById(id);
-
-		if (endereco == null)
-			return new ResponseEntity<>(endereco, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(endereco, HttpStatus.OK);
+		return new ResponseEntity<>(endereco, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Endereco> save(@RequestBody Endereco endereco) {
-		return new ResponseEntity<>(enderecoService.save(endereco), HttpStatus.CREATED);
+	public ResponseEntity<EnderecoDTO> salvar(@RequestBody Endereco endereco) {
+		return new ResponseEntity<>(enderecoService.save(endereco), HttpStatus.OK);
 	}
 
 	@PutMapping
@@ -49,13 +46,13 @@ public class EnderecoController {
 		return new ResponseEntity<>(enderecoService.update(endereco), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteEnderecoById(@PathVariable Integer id) {
-		boolean deleted = enderecoService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody Endereco endereco) {
+		if (enderecoService.delete(endereco)) {
+			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Não foi possível deletar", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

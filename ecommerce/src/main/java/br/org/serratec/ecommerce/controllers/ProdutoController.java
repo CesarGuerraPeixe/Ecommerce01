@@ -1,9 +1,9 @@
 package br.org.serratec.ecommerce.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import br.org.serratec.ecommerce.entities.Image;
+import br.org.serratec.ecommerce.dtos.ProdutoDTO;
 import br.org.serratec.ecommerce.entities.Produto;
-import br.org.serratec.ecommerce.services.ImageService;
 import br.org.serratec.ecommerce.services.ProdutoService;
 
 @RestController
@@ -27,36 +28,21 @@ public class ProdutoController {
 	@Autowired
 	ProdutoService produtoService;
 
-	@Autowired
-	ImageService imageService;
-
 	@GetMapping
-	public ResponseEntity<List<Produto>> findAll() {
+	public ResponseEntity<List<ProdutoDTO>> findAll() {
 		return new ResponseEntity<>(produtoService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}/image")
-	public ResponseEntity<byte[]> findByImage(@PathVariable Integer id) {
-		Image image = imageService.findByIdProduto(id);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-type", image.getTipo());
-		headers.add("Content-length", String.valueOf(image.getDados().length));
-		return new ResponseEntity<>(image.getDados(), headers, HttpStatus.OK);
-	}
-
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> findById(@PathVariable Integer id) {
+	public ResponseEntity<Produto> findById(@PathVariable Long id) {
 		Produto produto = produtoService.findById(id);
-
-		if (produto == null)
-			return new ResponseEntity<>(produto, HttpStatus.NOT_FOUND);
-		else
-			return new ResponseEntity<>(produto, HttpStatus.OK);
+		return new ResponseEntity<>(produto, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<Produto> save(@RequestBody Produto produto) {
-		return new ResponseEntity<>(produtoService.save(produto), HttpStatus.CREATED);
+	public ResponseEntity<ProdutoDTO> criarComFoto(@RequestPart("prod") String strProduto,
+			@RequestPart("img") MultipartFile arqImg) throws IOException {
+		return new ResponseEntity<>(produtoService.save(strProduto, arqImg), HttpStatus.CREATED);
 	}
 
 	@PutMapping
@@ -64,13 +50,13 @@ public class ProdutoController {
 		return new ResponseEntity<>(produtoService.update(produto), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteProdutoById(@PathVariable Integer id) {
-		boolean deleted = produtoService.deleteById2(id);
-		if (deleted) {
-			return new ResponseEntity<>(HttpStatus.OK);
+	@DeleteMapping
+	public ResponseEntity<String> delete(@RequestBody Produto produto) {
+		if (produtoService.delete(produto)) {
+			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Não foi possível deletar", HttpStatus.BAD_REQUEST);
 		}
 	}
+
 }

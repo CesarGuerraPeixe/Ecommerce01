@@ -1,23 +1,26 @@
 package br.org.serratec.ecommerce.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "endereco")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEndereco", scope = Endereco.class)
 public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_endereco")
-	private Integer idEndereco;
+	private Long idEndereco;
 
-	@Column(name = "cep")
+	@Column(name = "cep", nullable = false)
 	private String cep;
 
 	@Column(name = "rua")
@@ -38,32 +41,17 @@ public class Endereco {
 	@Column(name = "uf")
 	private String uf;
 
-	@OneToOne
-	@JoinColumn(name = "id_cliente")
+	@OneToOne(mappedBy = "endereco")
 	private Cliente cliente;
 
 	public Endereco() {
 	}
 
-	public Endereco(Integer idEndereco, String cep, String rua, String bairro, String cidade, String numero,
-			String complemento, String uf, Cliente cliente) {
-		super();
-		this.idEndereco = idEndereco;
-		this.cep = cep;
-		this.rua = rua;
-		this.bairro = bairro;
-		this.cidade = cidade;
-		this.numero = numero;
-		this.complemento = complemento;
-		this.uf = uf;
-		this.cliente = cliente;
-	}
-
-	public Integer getIdEndereco() {
+	public Long getIdEndereco() {
 		return idEndereco;
 	}
 
-	public void setIdEndereco(Integer idEndereco) {
+	public void setIdEndereco(Long idEndereco) {
 		this.idEndereco = idEndereco;
 	}
 

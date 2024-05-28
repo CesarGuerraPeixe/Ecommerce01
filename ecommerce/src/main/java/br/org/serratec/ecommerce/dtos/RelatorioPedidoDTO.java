@@ -64,4 +64,9 @@ public class RelatorioPedidoDTO {
 				+ itemPedidos;
 	}
 
+	
+	public String toStringSemItens() {
+		return "************** RELATÓRIO PEDIDO **************\n\n" + "Id do Pedido: " + idPedido + "\nData do Pedido: "
+				+ dataPedido + "\nStatus do pedido: aberto" ;
+	}
 }

@@ -54,7 +54,7 @@ public class PedidoService {
 		RelatorioPedidoDTO pedidoDTO = gerarRelatorioDTO(pedidoSalvo);
 
 		// ENVIA EMAIL
-		emailService.enviarEmail("APIserratecGrupo3@gmail.com", "Seu pedido foi realizado com sucesso!", pedidoDTO.toString());
+		emailService.enviarEmail("APIserratecGrupo3@gmail.com", "Seu pedido foi realizado com sucesso!", pedidoDTO.toStringSemItens());
 
 		// RETORNA DTO
 		return pedidoDTO;
